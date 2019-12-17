@@ -13,35 +13,36 @@ const video = document.querySelector('#video');
 let model;
 let temp;
 let tempHeight;
-handTrack.startVideo(video).then(status=>{
-    if(status){
-        navigator.getUserMedia({video: { width: window.innerWidth, height: window.innerHeight } },
-            function(stream) {
+handTrack.startVideo(video).then(status => {
+    if (status) {
+        navigator.getUserMedia({ video: { width: window.innerWidth, height: window.innerHeight } },
+            function (stream) {
                 video.srcObject = stream;
-                setInterval(runDetcion,1000);
+                setInterval(runDetcion, 100);
             },
-            function(err) {
-               console.log("The following error occurred: " + err.name);
+            function (err) {
+                console.log("The following error occurred: " + err.name);
             }
-         );
-        
+        );
+
     }
 });
 
-function runDetcion(){
-    model.detect(video).then(prediction=>{
+function runDetcion() {
+    model.detect(video).then(prediction => {
 
-        
-        if(prediction.length>0){
-            console.log(prediction[0]);
-            mouse.x=prediction[0].bbox[0]*2;
-            mouse.y=prediction[0].bbox[1]*2;
+
+        if (prediction.length > 0) {
+            // console.log(prediction[0]);
+            mouse.x = prediction[0].bbox[0] * (window.innerWidth / 400);
+            mouse.y = prediction[0].bbox[1] * (window.innerWidth / 400);
+            console.log(mouse);
         }
 
     })
 }
-handTrack.load(modelParams).then(lmodel =>{
-    model=lmodel;
+handTrack.load(modelParams).then(lmodel => {
+    model = lmodel;
 })
 var canvas = document.querySelector('canvas');
 canvas.width = window.innerWidth;
@@ -55,7 +56,7 @@ var mouse = {
     y: undefined
 };
 window.addEventListener("mousemove", function (e) {
-    console.log(e)
+    // console.log(e)
     // mouse.x = e.pageX;
     // mouse.y = e.pageY;
 });
