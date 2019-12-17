@@ -34,8 +34,8 @@ function runDetcion() {
 
         if (prediction.length > 0) {
             // console.log(prediction[0]);
-            mouse.x = prediction[0].bbox[0] * (window.innerWidth / 400);
-            mouse.y = prediction[0].bbox[1] * (window.innerWidth / 400);
+            mouse.x = prediction[0].bbox[0] * (window.innerWidth / 400) > window.innerWidth ? window.innerWidth : prediction[0].bbox[0] * (window.innerWidth / 400);
+            mouse.y = prediction[0].bbox[1] * (window.innerHeight / 400) > window.innerHeight ? window.innerHeight : prediction[0].bbox[1] * (window.innerHeight / 400);
             console.log(mouse);
         }
 
